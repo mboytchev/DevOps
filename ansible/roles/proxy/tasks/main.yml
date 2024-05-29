@@ -1,0 +1,13 @@
+---
+# tasks file for roles/proxy
+- name: Launch HTTP Server container
+  docker_container:
+    name: server
+    image: mboytchev/devops-httpd
+    ports:
+      - "80:80"
+    networks:
+      - name: app-network
+    state: started
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

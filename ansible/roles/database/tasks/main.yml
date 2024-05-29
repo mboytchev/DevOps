@@ -1,0 +1,15 @@
+---
+# tasks file for roles/database
+- name: Launch PostgreSQL container
+  docker_container:
+    name: my-postgres
+    image: mboytchev/devops-database
+    env:
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd
+      POSTGRES_DB: db
+    networks:
+      - name: app-network
+    state: started
+  vars:
+    ansible_python_interpreter: /usr/bin/python3

@@ -1,0 +1,10 @@
+---
+# tasks file for roles/backend_API
+- name: Launch API
+  docker_container:
+    name: backen_api
+    image: mboytchev/devops-api
+    networks:
+      - name: app-network
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
