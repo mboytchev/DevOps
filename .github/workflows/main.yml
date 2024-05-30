@@ -28,7 +28,7 @@ jobs:
       - name: Build and Test with Maven
         run: mvn -B verify sonar:sonar -Dsonar.projectKey=tp-dev-ops_tp2 -Dsonar.organization=tp-dev-ops -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --file TP1/backend_API/simple-api-student-main/pom.xml
 
-  build-and-publish:
+  build-and-push:
     needs: test-backend
     runs-on: ubuntu-22.04
     if: github.ref == 'refs/heads/main'
