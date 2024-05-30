@@ -37,19 +37,16 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: TP1/backend_API/simple-api-student-main
-          tags: ${{ secrets.DOCKER_USERNAME }}/devops-api:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/devops-api
 
       - name: Build image and push database
         uses: docker/build-push-action@v3
         with:
           context: TP1/database
-          tags: ${{ secrets.DOCKER_USERNAME }}/devops-database:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/devops-database
 
       - name: Build image and push httpd
         uses: docker/build-push-action@v3
         with:
           context: TP1/http_server
-          tags: ${{ secrets.DOCKER_USERNAME }}/devops-httpd:latest
-          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/devops-httpd
