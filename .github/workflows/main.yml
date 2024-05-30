@@ -1,4 +1,4 @@
-name: CI devops 2024 #test
+name: CI devops 2024
 on:
   push:
     branches:
@@ -12,6 +12,7 @@ on:
 jobs:
   test-backend:
     runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop'
     env:
       DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
     steps:
@@ -30,6 +31,7 @@ jobs:
   build-and-push:
     needs: test-backend
     runs-on: ubuntu-22.04
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2.5.0
