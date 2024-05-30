@@ -32,4 +32,4 @@ jobs:
         sudo apt-get update
  
     - name: Run Ansible Playbook
-      run: ansible-playbook -i ansible/inventories/setup.yml TP_DEVOPS/ansible/playbook.yml
+      run: ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml
