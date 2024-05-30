@@ -22,38 +22,34 @@ jobs:
           distribution: 'temurin'
 
       - name: Build and Test with Maven
-        run: mvn -B verify sonar:sonar -Dsonar.projectKey=tp-dev-ops_tp2 -Dsonar.organization=tp-dev-ops -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }}  --file TP1/backend_API/simple-api-student-main/pom.xml
+        run: mvn -B verify sonar:sonar -Dsonar.projectKey=tp-dev-ops_tp2 -Dsonar.organization=tp-dev-ops -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --file TP1/backend_API/simple-api-student-main/pom.xml
 
-  build and publish:
+  build-and-publish:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.5.0
 
       - name: Login to DockerHub
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_TOKEN }}
+        run: echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
         
       - name: Build image and push backend
         uses: docker/build-push-action@v3
         with:
-          # relative path to the place where source code with Dockerfile is located
           context: TP1/backend_API/simple-api-student-main
-          # Note: tags has to be all lower-case
-          tags:  ${{secrets.DOCKER_USERNAME}}/devops-api:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/devops-api:latest
           push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push database
-          # DO the same for database
         uses: docker/build-push-action@v3
         with:
-          # relative path to the place where source code with Dockerfile is located
           context: TP1/database
-          # Note: tags has to be all lower-case
-          tags:  ${{secrets.DOCKER_USERNAME}}/devops-database:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/devops-database:latest
           push: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build image and push httpd
-        # DO the same for httpd
         uses: docker/build-push-action@v3
         with:
-          # relative path to the place where source code with Dockerfile is located
           context: TP1/http_server
-          # Note: tags has to be all lower-case
-          tags:  ${{secrets.DOCKER_USERNAME}}/devops-httpd:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/devops-httpd:latest
           push: ${{ github.ref == 'refs/heads/main' }}
